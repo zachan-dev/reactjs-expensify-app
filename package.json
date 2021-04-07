@@ -13,6 +13,7 @@
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.0",
     "enzyme": "^3.11.0",
+    "express": "^4.17.1",
     "jest": "^26.6.3",
     "jest-enzyme": "^7.1.2",
     "live-server": "^1.2.1",
@@ -43,7 +44,10 @@
     "build:dev": "webpack",
     "build:prod": "webpack --env production",
     "dev-server": "webpack serve",
-    "test": "jest --config=jest.config.json"
+    "test": "jest --config=jest.config.json",
+    
+    "start": "node server/server.js",
+    "heroku-postbuild": "yarn run build:prod"
   },
   "description": "",
   "devDependencies": {
