@@ -17,9 +17,12 @@ firebase.initializeApp(firebaseConfig);
 // Get a reference to the database service
 const database = firebase.database();
 
+// Authentication (Google) Setup
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+
 // Important: Components shouldn't communicate with firebase
 // Should be used in action generators, and change configureStore
-export { firebase, database as default };
+export { firebase, googleAuthProvider, database as default };
 
 
 

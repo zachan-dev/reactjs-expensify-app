@@ -3,18 +3,18 @@ import ReactDOM from 'react-dom';
 /** React-Redux */
 import { Provider } from 'react-redux'; // allow Components to access the store
 /** Router */
-import AppRouter from './routers/AppRouter';
+import AppRouter, { history } from './routers/AppRouter';
 /** Redux */
 import configureStore from './store/configureStore';
 import { startSetExpenses } from './actions/expenses';
-import { setTextFilter } from './actions/filters';
+import { login, logout } from './actions/auth';
 import getVisibleExpenses from './selectors/expenses';
 /** Styles */
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
 /** Firebase */
-import './firebase/firebase';
+import { firebase } from './firebase/firebase';
 
 const store = configureStore();
 
@@ -38,10 +38,34 @@ const jsx = (
     </Provider>
 );
 /** App Render */
-const renderApp = (jsx) => ReactDOM.render(jsx, document.getElementById('app'));
+let hasRendered = false;
+const renderApp = () => {
+    if (!hasRendered) {
+        ReactDOM.render(jsx, document.getElementById('app'));
+        hasRendered = true;
+    }
+};
 
-renderApp(<p>Loading...</p>);
+ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
 
-store.dispatch(startSetExpenses()).then(() => {
-    renderApp(jsx);
+/** Login/Logout Event Handler */
+firebase.auth().onAuthStateChanged((user) => { // triggered when authentictaed -> unauthenticated vise versa
+    if (user) {
+        /** Just logged in */
+        //console.log('uid', user.uid);
+        store.dispatch(login(user.uid));
+        // only fetch and set data when logged in
+        store.dispatch(startSetExpenses()).then(() => {
+            renderApp();
+        });
+        // only redirect user to dashboard when user at login page
+        if (history.location.pathname === '/') {
+            history.push('/dashboard');
+        }
+    } else {
+        /** Just logged out */
+        store.dispatch(logout());
+        renderApp();
+        history.push('/');
+    }
 });
