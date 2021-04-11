@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import ExpenseForm from './ExpenseForm';
-import { editExpense, startRemoveExpense } from '../actions/expenses';
+import { startEditExpense, startRemoveExpense } from '../actions/expenses';
 
 export class EditExpensePage extends React.Component {
     // router props objects: history, location, match
@@ -10,8 +10,8 @@ export class EditExpensePage extends React.Component {
     // console.log(props);
     // console.log(props.match.params.id);
     onSubmit = (expense) => {
-        //this.props.dispatch(editExpense(this.props.expense.id, expense));
-        this.props.editExpense(this.props.expense.id, expense);
+        //this.props.dispatch(startEditExpense(this.props.expense.id, expense));
+        this.props.startEditExpense(this.props.expense.id, expense);
         this.props.history.push('/');
     };
     onRemove = () => {
@@ -37,7 +37,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-    editExpense: (id, expense) => dispatch(editExpense(id, expense)),
+    startEditExpense: (id, expense) => dispatch(startEditExpense(id, expense)),
     startRemoveExpense: (data) => dispatch(startRemoveExpense(data)),
 });
 
