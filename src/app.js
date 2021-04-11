@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'; // allow Components to access the store
 import AppRouter from './routers/AppRouter';
 /** Redux */
 import configureStore from './store/configureStore';
-import { addExpense } from './actions/expenses';
+import { startSetExpenses } from './actions/expenses';
 import { setTextFilter } from './actions/filters';
 import getVisibleExpenses from './selectors/expenses';
 /** Styles */
@@ -32,11 +32,16 @@ const store = configureStore();
 // store.dispatch(addExpense({ description: 'Rent', amount: 109500 }));
 
 /** React-Redux Provider Wrapper */
-const jax = (
+const jsx = (
     <Provider store={store}>
         <AppRouter />
     </Provider>
 );
 /** App Render */
-const renderApp = () => ReactDOM.render(jax, document.getElementById('app'));
-renderApp();
+const renderApp = (jsx) => ReactDOM.render(jsx, document.getElementById('app'));
+
+renderApp(<p>Loading...</p>);
+
+store.dispatch(startSetExpenses()).then(() => {
+    renderApp(jsx);
+});
