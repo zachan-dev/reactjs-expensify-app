@@ -32,9 +32,32 @@ export { firebase, googleAuthProvider, database as default };
     ".read": false, // disable public read and write
     ".write": false,
     "users": {
-      "$user_id": { // users/${uid} ref rules
+      "$user_id": {
       	".read": "$user_id === auth.uid", // check auth uid if that's same as the ref variable
-    	".write": "$user_id === auth.uid", 
+    	".write": "$user_id === auth.uid",
+        "expenses": {
+          "$expense_id": {  // for each expense
+            ".validate": "newData.hasChildren(['description', 'note', 'createdAt', 'amount'])",  // check if each expense has these 4 things
+            "description": {  // data validator for description
+              ".validate": "newData.isString() && newData.val().length > 0"
+            },
+            "note": {
+              ".validate": "newData.isString()"
+            },
+            "createdAt": {
+              ".validate": "newData.isNumber()"
+            },
+            "amount": {
+              ".validate": "newData.isNumber()"
+            },
+            "$other": {  // do not allow any other keys besides the 4 stuffs in each expense
+              ".validate": false
+            }
+          }
+        },
+        "$other": {  // do not allow any other keys besides expenses for root ref
+          ".validate": false
+        }
       }
     }
   }
