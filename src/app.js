@@ -60,11 +60,11 @@ firebase.auth().onAuthStateChanged((user) => { // triggered when authentictaed -
         // only fetch and set data when logged in
         store.dispatch(startSetExpenses()).then(() => {
             renderApp();
+            // only redirect user to dashboard when user at login page
+            if (history.location.pathname === '/') {
+                history.push('/dashboard');
+            }
         });
-        // only redirect user to dashboard when user at login page
-        if (history.location.pathname === '/') {
-            history.push('/dashboard');
-        }
     } else {
         /** Just logged out */
         store.dispatch(logout());
