@@ -26,6 +26,19 @@ export { firebase, googleAuthProvider, database as default };
 
 
 
+/** RULES on Firebase */
+/**{
+  "rules": {
+    ".read": false, // disable public read and write
+    ".write": false,
+    "users": {
+      "$user_id": { // users/${uid} ref rules
+      	".read": "$user_id === auth.uid", // check auth uid if that's same as the ref variable
+    	".write": "$user_id === auth.uid", 
+      }
+    }
+  }
+} */
 
 
 

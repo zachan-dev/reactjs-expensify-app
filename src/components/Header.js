@@ -10,8 +10,8 @@ export const Header = ({ startLogout }) => (
         {/** For navigation links */}
         {/** exact: use this route only when it is exact */}
         {/** activeClassName: will use the class when the navlink matches the current page */}
-        <NavLink exact to="/dashboard" activeClassName="is-active">Dashboard</NavLink>
-        <NavLink exact to="/create" activeClassName="is-active">Create Expense</NavLink>
+        <NavLink to="/dashboard" activeClassName="is-active">Dashboard</NavLink>
+        <NavLink to="/create" activeClassName="is-active">Create Expense</NavLink>
         <button onClick={startLogout}>Logout</button>
     </header>
 );
