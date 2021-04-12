@@ -16,6 +16,9 @@ import 'react-dates/lib/css/_datepicker.css';
 /** Firebase */
 import { firebase } from './firebase/firebase';
 
+/** Loading Page */
+import LoadingPage from './components/LoadingPage';
+
 const store = configureStore();
 
 /** Can view the state using redux devtools */
@@ -46,7 +49,7 @@ const renderApp = () => {
     }
 };
 
-ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
+ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
 /** Login/Logout Event Handler */
 firebase.auth().onAuthStateChanged((user) => { // triggered when authentictaed -> unauthenticated vise versa

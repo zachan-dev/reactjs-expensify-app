@@ -1,11 +1,17 @@
 // pixels: rem
+* {
+    box-sizing: border-box; // height = padding + content-height
+}
+
 html {
     font-size: 62.5%; // to transform 1rem from 16px to 10px
 }
 
 body {
+    color: $dark-grey;
     font-family: Helvetica, Arial, sans-serif;
     font-size: $m-size;
+    line-height: 1.6;
 }
 
 button {
@@ -17,4 +23,9 @@ button:disabled {
 
 .is-active {
     font-weight: bold;
+}
+
+/** react-dates DateRangePicker Arrow Not Showing Bug Fix */
+.DateInput {
+    position: inherit !important;
 }
